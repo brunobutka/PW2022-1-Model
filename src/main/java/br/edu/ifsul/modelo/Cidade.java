@@ -38,7 +38,7 @@ public class Cidade implements Serializable {
     @Column(name = "nome", length = 40, nullable = false)
     private String nome;
     
-    @NotNull(message = "O estado deve ser informado")
+    @NotNull(message = "O estado deve ser informado") //Não deixar null
     @ManyToOne
     @JoinColumn(name = "estado", referencedColumnName = "id", nullable = false)
     private Estado estado;
