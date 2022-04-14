@@ -4,8 +4,8 @@
  */
 package br.edu.ifsul.testes;
 
-import br.edu.ifsul.modelo.Cidade;
 import br.edu.ifsul.modelo.Estado;
+import br.edu.ifsul.modelo.Usuario;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -14,7 +14,7 @@ import javax.persistence.Persistence;
  *
  * @author 20201pf.cc0033
  */
-public class TestePersistirCidade {
+public class TestePersistirUsuario {
 
     /**
      * @param args the command line arguments
@@ -23,22 +23,21 @@ public class TestePersistirCidade {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("PW2022-1-ModelPU");
         EntityManager em = emf.createEntityManager();
         
-        Estado e = em.find(Estado.class, 1);
-        Cidade c = new Cidade();
-        c.setNome("Passo Fundo");
-        c.setEstado(e);
+        Usuario u = new Usuario();
+        u.setAtivo(true);
+        /*u.setEmail("brunobutka@gmail.com");
+        u.setNome("Bruno Butka");
+        u.setNomeUsuario("brunobutka");
+        u.setSenha("123456");*/
+        u.setEmail("breneroliveira@gmail.com");
+        u.setNome("Brener Augusto De Oliveira");
+        u.setNomeUsuario("breneroliveira");
+        u.setSenha("1234567");
         
-        try{
-            em.getTransaction().begin();
-            em.persist(c);
-            em.getTransaction().commit();
-        } catch(Exception ex){
-            System.out.println("Erro: " + ex.getMessage());
-            if(em.getTransaction().isActive() != true){
-               em.getTransaction().begin(); 
-            }
-            em.getTransaction().rollback(); 
-        }
+        em.getTransaction().begin();
+        em.persist(u);
+        em.getTransaction().commit();
+        
         em.close();
         emf.close();
         

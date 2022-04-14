@@ -4,8 +4,9 @@
  */
 package br.edu.ifsul.testes;
 
-import br.edu.ifsul.modelo.Cidade;
 import br.edu.ifsul.modelo.Estado;
+import br.edu.ifsul.modelo.Permissao;
+import br.edu.ifsul.modelo.Usuario;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -14,7 +15,7 @@ import javax.persistence.Persistence;
  *
  * @author 20201pf.cc0033
  */
-public class TestePersistirCidade {
+public class TestePersistirPermissao {
 
     /**
      * @param args the command line arguments
@@ -23,22 +24,18 @@ public class TestePersistirCidade {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("PW2022-1-ModelPU");
         EntityManager em = emf.createEntityManager();
         
-        Estado e = em.find(Estado.class, 1);
-        Cidade c = new Cidade();
-        c.setNome("Passo Fundo");
-        c.setEstado(e);
+        Permissao pusuario = new Permissao();
+        pusuario.setNome("USUARIO");
+        pusuario.setDescricao("Usuário Simples");
+        Permissao padmin = new Permissao();
+        padmin.setNome("ADMINISTRADOR");
+        padmin.setDescricao("Usuario Admin");
         
-        try{
-            em.getTransaction().begin();
-            em.persist(c);
-            em.getTransaction().commit();
-        } catch(Exception ex){
-            System.out.println("Erro: " + ex.getMessage());
-            if(em.getTransaction().isActive() != true){
-               em.getTransaction().begin(); 
-            }
-            em.getTransaction().rollback(); 
-        }
+        em.getTransaction().begin();
+        em.persist(pusuario);
+        em.persist(padmin);
+        em.getTransaction().commit();
+        
         em.close();
         emf.close();
         

@@ -4,8 +4,8 @@
  */
 package br.edu.ifsul.testes;
 
-import br.edu.ifsul.modelo.Cidade;
 import br.edu.ifsul.modelo.Estado;
+import br.edu.ifsul.modelo.Posicao;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -14,7 +14,7 @@ import javax.persistence.Persistence;
  *
  * @author 20201pf.cc0033
  */
-public class TestePersistirCidade {
+public class TestePersistirPosicao {
 
     /**
      * @param args the command line arguments
@@ -23,22 +23,19 @@ public class TestePersistirCidade {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("PW2022-1-ModelPU");
         EntityManager em = emf.createEntityManager();
         
-        Estado e = em.find(Estado.class, 1);
-        Cidade c = new Cidade();
-        c.setNome("Passo Fundo");
-        c.setEstado(e);
+        Posicao p1 = new Posicao();
+        p1.setNome("Goleiro");
+        Posicao p2 = new Posicao();
+        p2.setNome("Zagueiro");
+        Posicao p3 = new Posicao();
+        p3.setNome("Atacante");
         
-        try{
-            em.getTransaction().begin();
-            em.persist(c);
-            em.getTransaction().commit();
-        } catch(Exception ex){
-            System.out.println("Erro: " + ex.getMessage());
-            if(em.getTransaction().isActive() != true){
-               em.getTransaction().begin(); 
-            }
-            em.getTransaction().rollback(); 
-        }
+        em.getTransaction().begin();
+        em.persist(p1);
+        em.persist(p2);
+        em.persist(p3);
+        em.getTransaction().commit();
+        
         em.close();
         emf.close();
         
