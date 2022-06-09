@@ -22,12 +22,20 @@ public class TesteRemoverEstado {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("PW2022-1-ModelPU");
         EntityManager em = emf.createEntityManager();
         
-        Estado e = em.find(Estado.class, 1);
-        
-        em.getTransaction().begin();
-        em.remove(e);
-        em.getTransaction().commit();
-        
+        try{
+            Estado e = em.find(Estado.class, 1);
+
+            em.getTransaction().begin();
+            em.remove(e);
+            em.getTransaction().commit();
+        } catch (Exception e){
+            if(em.getTransaction().isActive() == false){
+                em.getTransaction().begin();
+            }
+            em.getTransaction().rollback();
+            System.out.println("Erro: " + 
+                    e.getCause().getCause().getCause().getMessage());
+        }
         em.close();
         emf.close();
         
